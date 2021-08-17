@@ -44,7 +44,7 @@
                     console.log([sinceDate], sinceDate.toLocaleString());
 
                     // Set timer
-                    setTimer(sinceDate, minutes);
+                    await setTimer(sinceDate, minutes);
                 });
             });
 
@@ -55,7 +55,7 @@
                 document.getElementsByName('since')[0].value = time;
             }
 
-            function setTimer(since, minutes) {
+            async function setTimer(since, minutes) {
                 const time = since.toLocaleTimeString('ja-JP').substr(0, 5)
                 new Notification(`${time}から${minutes}分毎でタイマーをセットしました。`);
                 const now = new Date();
