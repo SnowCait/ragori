@@ -69,8 +69,9 @@
                     console.log('[result]', damage, delayTotal, dps);
 
                     // Output
-                    document.getElementById('damage').innerText = `${damage} × ${skillTimes} ＝ ${damage * skillTimes}`;
-                    document.getElementById('dps').innerText = `${dps} ± 3% (${dps * 0.97} - ${dps * 1.03}`;
+                    document.getElementById('damage').innerText
+                        = `${damage} × ${skillTimes} ＝ ${damage * skillTimes} ± 3% (${damage * skillTimes * 0.97} - ${damage * skillTimes * 1.03}`;
+                    document.getElementById('dps').innerText = `${dps}`;
                 });
             });
 
