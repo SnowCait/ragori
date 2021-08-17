@@ -12,7 +12,7 @@
                 // Initialize
                 const date = new Date();
                 const time = date.toLocaleTimeString('ja-JP').substr(0, 5)
-                timer.getElementsByName('since')[0].value = time;
+                document.getElementsByName('since')[0].value = time;
 
                 // Start
                 timer.addEventListener('submit', async (e) => {
