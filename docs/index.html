@@ -17,7 +17,7 @@
                     // First time
                     if (Notification.permission !== 'granted') {
                         const permission = await Notification.requestPermission();
-                        console.log(permission);
+                        console.log('[permission]', permission);
                     }
 
                     console.log('[permission]', Notification.permission);
@@ -26,7 +26,13 @@
                         return;
                     }
 
-                    let notification = new Notification('hello');
+                    const sleep = ms => new Promise(resolve => setTimeout(() => resolve(), ms));
+                    const minutes = document.getElementsByName('minutes')[0].value;
+                    console.log('[minutes]', minutes);
+                    while(true) {
+                        await sleep(minutes * 60 * 1000);
+                        let notification = new Notification('hello');
+                    }
                 });
             });
         </script>
@@ -39,7 +45,7 @@
         <section>
             <h2>タイマー</h2>
             <form id="timer">
-                <input type="number" value="115">分ごと
+                <input name="minutes" type="number" value="115">分ごと
                 <input type="submit" value="開始">
             </form>
         </section>
