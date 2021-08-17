@@ -8,8 +8,8 @@
                 console.log('DOM loaded');
 
                 const timer = document.getElementById('timer');
-                timer.addEventListener('click', async (e) => {
-                    console.log('timer clicked');
+                timer.addEventListener('submit', async (e) => {
+                    console.log('timer submitted');
                     e.preventDefault();
 
                     console.log('[permission]', Notification.permission);
