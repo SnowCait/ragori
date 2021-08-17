@@ -5,10 +5,7 @@
         <title>ラグオリ</title>
         <script>
             document.addEventListener('DOMContentLoaded', (event) => {
-                console.log('DOM loaded');
-
-                // Initialize
-                initialize();
+                console.debug('DOM loaded');
 
                 // Start
                 const timer = document.getElementById('timer');
@@ -32,40 +29,27 @@
                     }
 
                     // Input
-                    const since = document.getElementsByName('since')[0].value;
+                    const inMinutes = Number(document.getElementsByName('in')[0].value);
                     const minutes = Number(document.getElementsByName('minutes')[0].value);
-                    console.log('[timer]', `every ${minutes}min since ${since}`);
-                    const sinceTime = since.split(':');
-                    const sinceDate = new Date();
-                    sinceDate.setHours(sinceTime[0]);
-                    sinceDate.setMinutes(sinceTime[1]);
-                    sinceDate.setSeconds(0);
-                    sinceDate.setMilliseconds(0);
-                    console.log('[sinceDate]', sinceDate.toLocaleString());
+                    console.log('[timer]', `every ${minutes}min in ${inMinutes}min`);
 
                     // Set timer
-                    await setTimer(sinceDate, minutes);
+                    await setTimer(inMinutes, minutes);
                 });
             });
 
-            function initialize() {
-                const now = new Date();
-                const time = now.toLocaleTimeString('ja-JP').substr(0, 5)
-                console.log('[time]', time);
-                document.getElementsByName('since')[0].value = time;
-            }
-
-            async function setTimer(since, minutes) {
-                const time = since.toLocaleTimeString('ja-JP').substr(0, 5)
+            async function setTimer(inMinutes, minutes) {
+                const date = new Date();
+                date.setMinutes(date.getMinutes() + inMinutes);
+                console.log('[in]', date);
+                const time = date.toLocaleTimeString('ja-JP').substr(0, 5)
                 new Notification(`${time}から${minutes}分毎でタイマーをセットしました。`);
-                const now = new Date();
-                console.log('[now]', now.toLocaleString());
+
                 const sleep = milliSeconds => new Promise(resolve => setTimeout(() => resolve(), milliSeconds));
-                if (since > now) {
-                    await sleep(since.getTime() - now.getTime())
-                }
+                await sleep(inMinutes * 60 * 1000)
                 while(true) {
-                    let notification = new Notification(`${time}から${minutes}分毎`);
+                    const notification = new Notification(`${time}から${minutes}分毎`);
+                    console.log('[notification]', notification);
                     await sleep(minutes * 60 * 1000);
                 }
             }
@@ -79,8 +63,8 @@
         <section>
             <h2>タイマー</h2>
             <form id="timer">
-                <input name="since" type="time" required>
-                <input name="minutes" type="number" value="120" required>分ごと
+                <input name="in" type="number" value="0" required>分後から
+                <input name="minutes" type="number" value="120" required>分毎
                 <input type="submit" value="開始">
             </form>
         </section>
