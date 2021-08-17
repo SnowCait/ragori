@@ -60,7 +60,7 @@
                     console.log('[delay]', delayFixed, delayVariable, delayWhole);
 
                     const damage = (magicAtk + magicAtkRefining)
-                        * skillRate
+                        * skillRate / 100
                         * (100 + magicDamageIncrease) / 100
                         + magicDamageAddition + skillAddition;
                     const delayTotal = delayFixed + delayVariable + delayWhole;
