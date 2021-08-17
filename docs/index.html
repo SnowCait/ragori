@@ -36,6 +36,31 @@
                     // Set timer
                     await setTimer(inMinutes, minutes);
                 });
+
+                const status = document.getElementById('status');
+                status.addEventListener('submit', async (e) => {
+                    // Input
+                    const magicAtk = Number(document.getElementById('magic-atk'));
+                    const magicAtkRefining = Number(document.getElementById('magic-atk-refining'));
+                    const magicDamageIncrease = Number(document.getElementById('magic-damage-increase'));
+                    const magicDamageAddition = Number(document.getElementById('magic-damage-addition'));
+                    const skillRate = Number(document.getElementById('skill-rate'));
+                    const skillTimes = Number(document.getElementById('skill-times'));
+                    const skillAddition = Number(document.getElementById('skill-addition'));
+                    const delayFixed = Number(document.getElementById('fixed-delay'));
+                    const delayVariable = Number(document.getElementById('variable-delay'));
+                    const delayWhole = Number(document.getElementById('whole-delay'));
+
+                    const damage = (magicAtk + magicAtkRefining) * skillRate * (100 + magicDamageIncrease) / 100
+                        + magicDamageAddition + skillAddition;
+                    const delayTotal = delayFixed + delayVariable + delayWhole;
+
+                    // Output
+                    const damage = document.getElementById('damage');
+                    const dps = document.getElementById('dps');
+                    damage.innerText = damage;
+                    dps.innerText = damage / delayTotal;
+                });
             });
 
             async function setTimer(inMinutes, minutes) {
@@ -67,6 +92,27 @@
                 <input name="minutes" type="number" value="120" required>分毎
                 <input type="submit" value="開始">
             </form>
+        </section>
+        <section>
+            <h2>DPS</h2>
+            <form id="status">
+                魔法攻撃力<input name="magic-atk" type="number" value="1000" required><br>
+                精錬魔法攻撃力<input name="magic-atk-refining" type="number" value="100" required><br>
+                魔法ダメージ増加<input name="magic-damage-increase" type="number" value="100" required>%<br>
+                追加魔法ダメージ<input name="magic-damage-addition" type="number" value="100" required><br>
+                スキル倍率<input name="skill-rate" type="number" value="500" required>%<br>
+                ヒット数<input name="skill-times" type="number" value="1" required>回<br>
+                スキル追加ダメージ<input name="skill-addition" type="number" value="1000" required><br>
+                固定詠唱<input name="fixed-delay" type="number" value="1.00" step="0.01" required><br>
+                変動詠唱<input name="variable-delay" type="number" value="0.50" step="0.01" required><br>
+                全体ディレイ<input name="whole-delay" type="number" value="5.00" step="0.01" required><br>
+                <br>
+                <input type="submit" value="計算">
+            </form>
+            <div>
+                ダメージ: <div id="damage"></div>
+                DPS: <div id="dps"></div>
+            </div>
         </section>
     </body>
 </html>
