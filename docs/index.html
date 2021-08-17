@@ -6,21 +6,21 @@
         <script>
             document.addEventListener('DOMContentLoaded', (event) => {
                 console.log('DOM loaded');
-            });
 
-            const timer = document.getElementById('timer');
-            timer.addEventListener('click', (e) => {
-                console.log('timer clicked');
-                e.preventDefault();
+                const timer = document.getElementById('timer');
+                timer.addEventListener('click', (e) => {
+                    console.log('timer clicked');
+                    e.preventDefault();
 
-                if (Notification.permission === 'default') {
-                    let permission = Notification.requestPermission();
-                    console.log(permission);
-                }
+                    if (Notification.permission === 'default') {
+                        let permission = Notification.requestPermission();
+                        console.log(permission);
+                    }
 
-                if (Notification.permission === 'granted') {
-                    let notification = new Notification('hello');
-                }
+                    if (Notification.permission === 'granted') {
+                        let notification = new Notification('hello');
+                    }
+                });
             });
         </script>
     </head>
