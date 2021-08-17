@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>ラグオリ</title>
+        <script>
+            document.addEventListener('DOMContentLoaded', (event) => {
+                console.log('DOM loaded');
+
+                // Initialize
+                initialize();
+
+                // Start
+                const timer = document.getElementById('timer');
+                timer.addEventListener('submit', async (e) => {
+                    console.log('timer started');
+                    e.preventDefault();
+
+                    console.log('[permission]', Notification.permission);
+
+                    // Request permission for the first time
+                    if (Notification.permission !== 'granted') {
+                        const permission = await Notification.requestPermission();
+                        console.log('[permission]', permission);
+                    }
+
+                    console.log('[permission]', Notification.permission);
+
+                    // Require permission
+                    if (Notification.permission !== 'granted') {
+                        return;
+                    }
+
+                    // Input
+                    const since = document.getElementsByName('since')[0].value;
+                    const minutes = Number(document.getElementsByName('minutes')[0].value);
+                    console.log('[timer]', `every ${minutes}min since ${since}`);
+                    const sinceTime = since.split(':');
+                    const sinceDate = new Date();
+                    sinceDate.setHours(sinceTime[0]);
+                    sinceDate.setMinutes(sinceTime[1]);
+                    sinceDate.setSeconds(0);
+                    sinceDate.setMilliseconds(0);
+                    console.log('[sinceDate]', sinceDate.toLocaleString());
+
+                    // Set timer
+                    await setTimer(sinceDate, minutes);
+                });
+            });
+
+            function initialize() {
+                const now = new Date();
+                const time = now.toLocaleTimeString('ja-JP').substr(0, 5)
+                console.log('[time]', time);
+                document.getElementsByName('since')[0].value = time;
+            }
+
+            async function setTimer(since, minutes) {
+                const time = since.toLocaleTimeString('ja-JP').substr(0, 5)
+                new Notification(`${time}から${minutes}分毎でタイマーをセットしました。`);
+                const now = new Date();
+                console.log('[now]', now.toLocaleString());
+                const sleep = milliSeconds => new Promise(resolve => setTimeout(() => resolve(), milliSeconds));
+                if (since > now) {
+                    await sleep(since.getTime() - now.getTime())
+                }
+                while(true) {
+                    let notification = new Notification(`${time}から${minutes}分毎`);
+                    await sleep(minutes * 60 * 1000);
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <header>
+            <h1>ラグオリ</h1>
+            <p>ラグオリに関する何か。</p>
+        </header>
+        <section>
+            <h2>タイマー</h2>
+            <form id="timer">
+                <input name="since" type="time" required>
+                <input name="minutes" type="number" value="120" required>分ごと
+                <input type="submit" value="開始">
+            </form>
+        </section>
+    </body>
+</html>
