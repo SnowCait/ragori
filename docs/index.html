@@ -54,10 +54,19 @@
                     const delayVariable = Number(document.getElementById('variable-delay'));
                     const delayWhole = Number(document.getElementById('whole-delay'));
 
-                    const damage = (magicAtk + magicAtkRefining) * skillRate * (100 + magicDamageIncrease) / 100
+                    console.log('[magic-atk]', magicAtk, magicAtkRefining);
+                    console.log('[magic-damage]', magicDamageIncrease, magicDamageAddition);
+                    console.log('[skill]', skillRate, skillTimes, skillAddition);
+                    console.log('[delay]', delayFixed, delayVariable, delayWhole);
+
+                    const damage = (magicAtk + magicAtkRefining)
+                        * skillRate * skillTimes
+                        * (100 + magicDamageIncrease) / 100
                         + magicDamageAddition + skillAddition;
                     const delayTotal = delayFixed + delayVariable + delayWhole;
                     const dps = damage / delayTotal;
+
+                    console.log('[result]', damage, delayTotal, dps);
 
                     // Output
                     document.getElementById('damage').innerText = `${damage}`;
