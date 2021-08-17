@@ -14,7 +14,7 @@
 
                     console.log('[permission]', Notification.permission);
 
-                    // First time
+                    // Request permission for the first time
                     if (Notification.permission !== 'granted') {
                         const permission = await Notification.requestPermission();
                         console.log('[permission]', permission);
@@ -22,16 +22,25 @@
 
                     console.log('[permission]', Notification.permission);
 
+                    // Require permission
                     if (Notification.permission !== 'granted') {
                         return;
                     }
 
-                    const sleep = ms => new Promise(resolve => setTimeout(() => resolve(), ms));
-                    const minutes = document.getElementsByName('minutes')[0].value;
-                    console.log('[minutes]', minutes);
+                    // Input
+                    const sinceString = document.getElementsByName('since')[0].value;
+                    const minutes = Number(document.getElementsByName('minutes')[0].value);
+                    console.log('[timer]', `every ${minutes}min since ${sinceString}`);
+                    new Notification(`${sinceString}から${minutes}分でタイマーをセットしました。`);
+
+                    // Set timer
+                    const now = Date.now();
+                    const since = Date.now(); // TODO: from input
+                    const sleep = milliSeconds => new Promise(resolve => setTimeout(() => resolve(), milliSeconds));
+                    await sleep(since - now)
                     while(true) {
+                        let notification = new Notification(`${sinceString}から${minutes}分`);
                         await sleep(minutes * 60 * 1000);
-                        let notification = new Notification('hello');
                     }
                 });
             });
@@ -45,7 +54,8 @@
         <section>
             <h2>タイマー</h2>
             <form id="timer">
-                <input name="minutes" type="number" value="115">分ごと
+                <input name="since" type="time" required>
+                <input name="minutes" type="number" value="120" required>分ごと
                 <input type="submit" value="開始">
             </form>
         </section>
