@@ -60,7 +60,7 @@
                     console.log('[delay]', delayFixed, delayVariable, delayWhole);
 
                     const damage = (magicAtk + magicAtkRefining)
-                        * skillRate * skillTimes
+                        * skillRate
                         * (100 + magicDamageIncrease) / 100
                         + magicDamageAddition + skillAddition;
                     const delayTotal = delayFixed + delayVariable + delayWhole;
@@ -69,7 +69,7 @@
                     console.log('[result]', damage, delayTotal, dps);
 
                     // Output
-                    document.getElementById('damage').innerText = `${damage}`;
+                    document.getElementById('damage').innerText = `${damage} × ${skillTimes} ＝ ${damage * skillTimes}`;
                     document.getElementById('dps').innerText = `${dps} ± 3% (${dps * 0.97} - ${dps * 1.03}`;
                 });
             });
