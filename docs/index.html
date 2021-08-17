@@ -7,14 +7,14 @@
             document.addEventListener('DOMContentLoaded', (event) => {
                 console.log('DOM loaded');
 
-                const timer = document.getElementById('timer');
-
                 // Initialize
                 const date = new Date();
                 const time = date.toLocaleTimeString('ja-JP').substr(0, 5)
+                console.log('[time]', time);
                 document.getElementsByName('since')[0].value = time;
 
                 // Start
+                const timer = document.getElementById('timer');
                 timer.addEventListener('submit', async (e) => {
                     console.log('timer started');
                     e.preventDefault();
@@ -37,14 +37,21 @@
                     // Input
                     const sinceValue = document.getElementsByName('since')[0].value;
                     const minutes = Number(document.getElementsByName('minutes')[0].value);
-                    console.log('[timer]', `every ${minutes}min since ${sinceValue}`);
+                    const sinceTime = sinceValue.split(':');
+                    console.log('[timer]', `every ${minutes}min since ${sinceValue}`, sinceTime);
                     new Notification(`${sinceValue}から${minutes}分毎でタイマーをセットしました。`);
 
                     // Set timer
-                    const now = Date.now();
-                    const since = Date.now(); // TODO: from input
+                    const now = new Date();
+                    const since = new Date();
+                    since.setHours(sinceTime[0]);
+                    since.setMinutes(sinceTime[1]);
+                    console.log([now], now.toLocaleString());
+                    console.log([since], since.toLocaleString());
                     const sleep = milliSeconds => new Promise(resolve => setTimeout(() => resolve(), milliSeconds));
-                    await sleep(since - now)
+                    if (since > now) {
+                        await sleep(since.getTime() - now.getTime())
+                    }
                     while(true) {
                         let notification = new Notification(`${sinceValue}から${minutes}分毎`);
                         await sleep(minutes * 60 * 1000);
