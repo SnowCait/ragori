@@ -43,16 +43,16 @@
                     e.preventDefault();
 
                     // Input
-                    const magicAtk = Number(document.getElementById('magic-atk'));
-                    const magicAtkRefining = Number(document.getElementById('magic-atk-refining'));
-                    const magicDamageIncrease = Number(document.getElementById('magic-damage-increase'));
-                    const magicDamageAddition = Number(document.getElementById('magic-damage-addition'));
-                    const skillRate = Number(document.getElementById('skill-rate'));
-                    const skillTimes = Number(document.getElementById('skill-times'));
-                    const skillAddition = Number(document.getElementById('skill-addition'));
-                    const delayFixed = Number(document.getElementById('fixed-delay'));
-                    const delayVariable = Number(document.getElementById('variable-delay'));
-                    const delayWhole = Number(document.getElementById('whole-delay'));
+                    const magicAtk = Number(document.getElementsByName('magic-atk')[0]);
+                    const magicAtkRefining = Number(document.getElementsByName('magic-atk-refining')[0]);
+                    const magicDamageIncrease = Number(document.getElementsByName('magic-damage-increase')[0]);
+                    const magicDamageAddition = Number(document.getElementsByName('magic-damage-addition')[0]);
+                    const skillRate = Number(document.getElementsByName('skill-rate')[0]);
+                    const skillTimes = Number(document.getElementsByName('skill-times')[0]);
+                    const skillAddition = Number(document.getElementsByName('skill-addition')[0]);
+                    const delayFixed = Number(document.getElementsByName('fixed-delay')[0]);
+                    const delayVariable = Number(document.getElementsByName('variable-delay')[0]);
+                    const delayWhole = Number(document.getElementsByName('whole-delay')[0]);
 
                     console.log('[magic-atk]', magicAtk, magicAtkRefining);
                     console.log('[magic-damage]', magicDamageIncrease, magicDamageAddition);
