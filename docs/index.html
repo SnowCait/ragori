@@ -36,6 +36,43 @@
                     // Set timer
                     await setTimer(inMinutes, minutes);
                 });
+
+                const status = document.getElementById('status');
+                status.addEventListener('submit', async (e) => {
+                    console.log('calculate');
+                    e.preventDefault();
+
+                    // Input
+                    const magicAtk = Number(document.getElementsByName('magic-atk')[0].value);
+                    const magicAtkRefining = Number(document.getElementsByName('magic-atk-refining')[0].value);
+                    const magicDamageIncrease = Number(document.getElementsByName('magic-damage-increase')[0].value);
+                    const magicDamageAddition = Number(document.getElementsByName('magic-damage-addition')[0].value);
+                    const skillRate = Number(document.getElementsByName('skill-rate')[0].value);
+                    const skillTimes = Number(document.getElementsByName('skill-times')[0].value);
+                    const skillAddition = Number(document.getElementsByName('skill-addition')[0].value);
+                    const delayFixed = Number(document.getElementsByName('fixed-delay')[0].value);
+                    const delayVariable = Number(document.getElementsByName('variable-delay')[0].value);
+                    const delayWhole = Number(document.getElementsByName('whole-delay')[0].value);
+
+                    console.log('[magic-atk]', magicAtk, magicAtkRefining);
+                    console.log('[magic-damage]', magicDamageIncrease, magicDamageAddition);
+                    console.log('[skill]', skillRate, skillTimes, skillAddition);
+                    console.log('[delay]', delayFixed, delayVariable, delayWhole);
+
+                    const damage = (magicAtk + magicAtkRefining)
+                        * skillRate / 100
+                        * (100 + magicDamageIncrease) / 100
+                        + magicDamageAddition + skillAddition;
+                    const delayTotal = delayFixed + delayVariable + delayWhole;
+                    const dps = damage / delayTotal;
+
+                    console.log('[result]', damage, delayTotal, dps);
+
+                    // Output
+                    document.getElementById('damage').innerText
+                        = `${damage} × ${skillTimes} ＝ ${damage * skillTimes} ± 3% ([${damage * 0.97} - ${damage * 1.03}] × ${skillTimes} ＝ [${damage * skillTimes * 0.97} - ${damage * skillTimes * 1.03}])`;
+                    document.getElementById('dps').innerText = `${dps}`;
+                });
             });
 
             async function setTimer(inMinutes, minutes) {
@@ -67,6 +104,28 @@
                 <input name="minutes" type="number" value="120" required>分毎
                 <input type="submit" value="開始">
             </form>
+        </section>
+        <section>
+            <h2>DPS</h2>
+            <p>相手はプロンテラの案山子。モンスターだと防御力がありそう。</p>
+            <form id="status">
+                魔法攻撃力<input name="magic-atk" type="number" value="1000" required><br>
+                精錬魔法攻撃力<input name="magic-atk-refining" type="number" value="100" required><br>
+                魔法ダメージ増加<input name="magic-damage-increase" type="number" value="100" required>%<br>
+                追加魔法ダメージ<input name="magic-damage-addition" type="number" value="100" required><br>
+                スキル倍率<input name="skill-rate" type="number" value="500" required>%<br>
+                ヒット数<input name="skill-times" type="number" value="1" required>回<br>
+                スキル追加ダメージ<input name="skill-addition" type="number" value="1000" required><br>
+                固定詠唱<input name="fixed-delay" type="number" value="1.00" step="0.01" required><br>
+                変動詠唱<input name="variable-delay" type="number" value="0.50" step="0.01" required><br>
+                全体ディレイ<input name="whole-delay" type="number" value="5.00" step="0.01" required><br>
+                <br>
+                <input type="submit" value="計算">
+            </form>
+            <div>
+                ダメージ: <div id="damage"></div>
+                DPS: <div id="dps"></div>
+            </div>
         </section>
     </body>
 </html>
