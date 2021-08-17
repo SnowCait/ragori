@@ -8,10 +8,7 @@
                 console.log('DOM loaded');
 
                 // Initialize
-                const date = new Date();
-                const time = date.toLocaleTimeString('ja-JP').substr(0, 5)
-                console.log('[time]', time);
-                document.getElementsByName('since')[0].value = time;
+                initialize();
 
                 // Start
                 const timer = document.getElementById('timer');
@@ -35,29 +32,41 @@
                     }
 
                     // Input
-                    const sinceValue = document.getElementsByName('since')[0].value;
+                    const since = document.getElementsByName('since')[0].value;
                     const minutes = Number(document.getElementsByName('minutes')[0].value);
-                    const sinceTime = sinceValue.split(':');
-                    console.log('[timer]', `every ${minutes}min since ${sinceValue}`, sinceTime);
-                    new Notification(`${sinceValue}から${minutes}分毎でタイマーをセットしました。`);
+                    console.log('[timer]', `every ${minutes}min since ${since}`, sinceTime);
+                    const sinceTime = since.split(':');
+                    const sinceDate = new Date();
+                    sinceDate.setHours(sinceTime[0]);
+                    sinceDate.setMinutes(sinceTime[1]);
+                    console.log([sinceDate], sinceDate.toLocaleString());
 
                     // Set timer
-                    const now = new Date();
-                    const since = new Date();
-                    since.setHours(sinceTime[0]);
-                    since.setMinutes(sinceTime[1]);
-                    console.log([now], now.toLocaleString());
-                    console.log([since], since.toLocaleString());
-                    const sleep = milliSeconds => new Promise(resolve => setTimeout(() => resolve(), milliSeconds));
-                    if (since > now) {
-                        await sleep(since.getTime() - now.getTime())
-                    }
-                    while(true) {
-                        let notification = new Notification(`${sinceValue}から${minutes}分毎`);
-                        await sleep(minutes * 60 * 1000);
-                    }
+                    setTimer(sinceDate, minutes);
                 });
             });
+
+            function initialize() {
+                const now = new Date();
+                const time = now.toLocaleTimeString('ja-JP').substr(0, 5)
+                console.log('[time]', time);
+                document.getElementsByName('since')[0].value = time;
+            }
+
+            function setTimer(since, minutes) {
+                const time = since.toLocaleTimeString('ja-JP').substr(0, 5)
+                new Notification(`${time}から${minutes}分毎でタイマーをセットしました。`);
+                const now = new Date();
+                console.log([now], now.toLocaleString());
+                const sleep = milliSeconds => new Promise(resolve => setTimeout(() => resolve(), milliSeconds));
+                if (since > now) {
+                    await sleep(since.getTime() - now.getTime())
+                }
+                while(true) {
+                    let notification = new Notification(`${time}から${minutes}分毎`);
+                    await sleep(minutes * 60 * 1000);
+                }
+            }
         </script>
     </head>
     <body>
