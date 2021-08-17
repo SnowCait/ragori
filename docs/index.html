@@ -15,16 +15,18 @@
                     console.log('[permission]', Notification.permission);
 
                     // First time
-                    if (Notification.permission === 'default') {
+                    if (Notification.permission !== 'granted') {
                         const permission = await Notification.requestPermission();
                         console.log(permission);
                     }
 
                     console.log('[permission]', Notification.permission);
 
-                    if (Notification.permission === 'granted') {
-                        let notification = new Notification('hello');
+                    if (Notification.permission !== 'granted') {
+                        return;
                     }
+
+                    let notification = new Notification('hello');
                 });
             });
         </script>
