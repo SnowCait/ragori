@@ -8,14 +8,19 @@
                 console.log('DOM loaded');
 
                 const timer = document.getElementById('timer');
-                timer.addEventListener('click', (e) => {
+                timer.addEventListener('click', async (e) => {
                     console.log('timer clicked');
                     e.preventDefault();
 
+                    console.log('[permission]', Notification.permission);
+
+                    // First time
                     if (Notification.permission === 'default') {
-                        let permission = Notification.requestPermission();
+                        const permission = await Notification.requestPermission();
                         console.log(permission);
                     }
+
+                    console.log('[permission]', Notification.permission);
 
                     if (Notification.permission === 'granted') {
                         let notification = new Notification('hello');
