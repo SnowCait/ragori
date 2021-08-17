@@ -39,6 +39,8 @@
                     const sinceDate = new Date();
                     sinceDate.setHours(sinceTime[0]);
                     sinceDate.setMinutes(sinceTime[1]);
+                    sinceDate.setSeconds(0);
+                    sinceDate.setMilliseconds(0);
                     console.log([sinceDate], sinceDate.toLocaleString());
 
                     // Set timer
