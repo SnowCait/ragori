@@ -41,7 +41,7 @@
                     sinceDate.setMinutes(sinceTime[1]);
                     sinceDate.setSeconds(0);
                     sinceDate.setMilliseconds(0);
-                    console.log([sinceDate], sinceDate.toLocaleString());
+                    console.log('[sinceDate]', sinceDate.toLocaleString());
 
                     // Set timer
                     await setTimer(sinceDate, minutes);
@@ -59,7 +59,7 @@
                 const time = since.toLocaleTimeString('ja-JP').substr(0, 5)
                 new Notification(`${time}から${minutes}分毎でタイマーをセットしました。`);
                 const now = new Date();
-                console.log([now], now.toLocaleString());
+                console.log('[now]', now.toLocaleString());
                 const sleep = milliSeconds => new Promise(resolve => setTimeout(() => resolve(), milliSeconds));
                 if (since > now) {
                     await sleep(since.getTime() - now.getTime())
