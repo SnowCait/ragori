@@ -34,7 +34,7 @@
                     // Input
                     const since = document.getElementsByName('since')[0].value;
                     const minutes = Number(document.getElementsByName('minutes')[0].value);
-                    console.log('[timer]', `every ${minutes}min since ${since}`, sinceTime);
+                    console.log('[timer]', `every ${minutes}min since ${since}`);
                     const sinceTime = since.split(':');
                     const sinceDate = new Date();
                     sinceDate.setHours(sinceTime[0]);
