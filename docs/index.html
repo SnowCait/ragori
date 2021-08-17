@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>ラグオリ</title>
+        <script>
+            document.addEventListener('DOMContentLoaded', (event) => {
+                console.log('DOM loaded');
+            });
+
+            const timer = document.getElementById('timer');
+            timer.addEventListener('click', (e) => {
+                console.log('timer clicked');
+                e.preventDefault();
+
+                if (Notification.permission === 'default') {
+                    let permission = Notification.requestPermission();
+                    console.log(permission);
+                }
+
+                if (Notification.permission === 'granted') {
+                    let notification = new Notification('hello');
+                }
+            });
+        </script>
+    </head>
+    <body>
+        <header>
+            <h1>ラグオリ</h1>
+            <p>ラグオリに関する何か。</p>
+        </header>
+        <section>
+            <h2>タイマー</h2>
+            <form id="timer">
+                <input type="number" value="115">分ごと
+                <input type="submit" value="開始">
+            </form>
+        </section>
+    </body>
+</html>
