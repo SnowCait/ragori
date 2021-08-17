@@ -39,6 +39,9 @@
 
                 const status = document.getElementById('status');
                 status.addEventListener('submit', async (e) => {
+                    console.log('calculate');
+                    e.preventDefault();
+
                     // Input
                     const magicAtk = Number(document.getElementById('magic-atk'));
                     const magicAtkRefining = Number(document.getElementById('magic-atk-refining'));
@@ -54,12 +57,11 @@
                     const damage = (magicAtk + magicAtkRefining) * skillRate * (100 + magicDamageIncrease) / 100
                         + magicDamageAddition + skillAddition;
                     const delayTotal = delayFixed + delayVariable + delayWhole;
+                    const dps = damage / delayTotal;
 
                     // Output
-                    const damage = document.getElementById('damage');
-                    const dps = document.getElementById('dps');
-                    damage.innerText = damage;
-                    dps.innerText = damage / delayTotal;
+                    document.getElementById('damage').innerText = `${damage}`;
+                    document.getElementById('dps').innerText = `${dps} ± 3% (${dps * 0.97} - ${dps * 1.03}`;
                 });
             });
 
